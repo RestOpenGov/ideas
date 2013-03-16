@@ -1,0 +1,11 @@
+{
+  "name": "ideas",
+  "description": "Social brainstorming to share and discuss ideas to improve your city",
+  "version": "0.2.0",
+  "private": true,
+  "dependencies": {
+    "restify": "2.3.4",
+    "underscore": "1.4.4",
+    "sequelize": "1.3.x"
+  }
+}
