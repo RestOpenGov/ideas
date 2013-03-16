@@ -12,12 +12,14 @@ var db = new Sequelize(
     }
   }
 );
-db.addModel = function(name) {
 
-  this.import(__dirname + '/' + name);
-}
-db.models = {};
-db.models.User = db.addModel('user');
-db.models.IdeaType = db.addModel('ideaType');
+db.addModel = function(name) {
+  var modelName = name.charAt(0).toUpperCase() + name.slice(1);
+  this.models = this.models || {};
+  this.models[modelName] = this.import(__dirname + '/' + name);
+};
+
+db.addModel('user');
+db.addModel('ideaType');
 
 module.exports = db;
