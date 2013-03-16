@@ -11,7 +11,6 @@ exports.list = function(req, res, next) {
     nickname: "nardoz"
   }]);
 
-  return next();
 };
 
 exports.show = function(req, res, next) {
@@ -26,6 +25,5 @@ exports.show = function(req, res, next) {
     nickname: "nardoz"
   });
 
-  return next();
 };
 

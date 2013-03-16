@@ -1,4 +1,5 @@
-Sublime configuration
+Sublime
+
 
 Preferences, Settings - User
 
@@ -66,3 +67,13 @@ Preferences, Settings - User
   "use_tab_stops": true
 }
 ```
+
+# Plugins
+
+Alignment
+BracketHighlighter
+DocBlockr
+SublimeLinter
+SideBar enhancer
+
+Theme - Soda
