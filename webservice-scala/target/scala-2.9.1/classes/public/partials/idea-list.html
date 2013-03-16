@@ -1,0 +1,9 @@
+
+<div id="ideas_map"></div>
+
+<p>{{ideas.length}} resultados</p>
+
+<div class="row-fluid">
+	<div ng-include src="'includes/idea.html'" ng-controller="IdeaListCtrl" ng-repeat="idea in ideas"></div>
+</div>
+

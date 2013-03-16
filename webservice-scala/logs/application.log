@@ -1,0 +1,31 @@
+2013-03-16 17:21:52,972 - [INFO] - from play in main 
+Listening for HTTP on port 9000...
+
+2013-03-16 17:23:11,571 - [INFO] - from play in play-akka.actor.default-dispatcher-1 
+database [default] connected at jdbc:mysql://localhost/ideasba?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+
+2013-03-16 17:23:11,823 - [INFO] - from application in play-akka.actor.default-dispatcher-1 
+
+     _      _                                    ___    _____ 
+    (_)    ( )                                  (  _`\ (  _  )
+    | |   _| |   __     _ _   ___     ______    | (_) )| (_) |
+    | | /'_` | /'__`\ /'_` )/',__)   (______)   |  _ <'|  _  |
+    | |( (_| |(  ___/( (_| |\__, \              | (_) )| | | |
+    (_)`\__,_)`\____)`\__,_)(____/              (____/'(_) (_)
+                                                        
+    IDEASBA IS STARTING 
+               ^^^^^^^^
+    
+
+2013-03-16 17:23:11,913 - [INFO] - from play in play-akka.actor.default-dispatcher-1 
+Starting application default Akka system.
+
+2013-03-16 17:23:11,915 - [INFO] - from application in play-akka.actor.default-dispatcher-1 
+Starting notification service.
+
+2013-03-16 17:23:11,943 - [INFO] - from application in play-akka.actor.default-dispatcher-1 
+Report Scheduler started.
+
+2013-03-16 17:23:11,950 - [INFO] - from play in play-akka.actor.default-dispatcher-1 
+Application started (Dev)
+

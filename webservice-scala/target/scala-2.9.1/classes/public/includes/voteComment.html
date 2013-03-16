@@ -1,0 +1,11 @@
+<div class="btn-toolbar votes-container">
+	<div class="row-fluid">
+	  <div class="btn-group" ng-controller="VoteCtrl">
+	    <a class="btn btn btn-primary"  ng-click="votePositive()"><i class="icon-thumbs-up"></i></a>
+	    <a class="btn btn btn-default" ng-click="voteNegative()"><i class="icon-thumbs-down" ></i></a>
+	  </div>
+	</div>
+	<div class="row-fluid">
+		<h6><span class="badge badge-warning">{{comment.votes.pos - comment.votes.neg}}</span> </h6>
+	</div>
+</div>
