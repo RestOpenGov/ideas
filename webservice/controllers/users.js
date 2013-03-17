@@ -1,29 +1,17 @@
+var User = require('../db.js').models.User;
 
-exports.list = function(req, res, next) {
+module.exports = {
 
-  res.send([{
-    name: "Mister Nardoz",
-    avatar: "http://profile.ak.fbcdn.net/hprofile-ak-ash4/276893_244434932260649_848703319_n.jpg",
-    email: "nardoz@hotmail.com",
-    url: "/api/users/1",
-    id: 1,
-    created: "2012-09-23T10:45:00Z",
-    nickname: "nardoz"
-  }]);
+  list: function(req, res, next) {
+    User.findAll().success(function(users) {
+      res.send(users);
+    });
+  },
 
-};
-
-exports.show = function(req, res, next) {
-
-  res.send({
-    name: "Mister Nardoz",
-    avatar: "http://profile.ak.fbcdn.net/hprofile-ak-ash4/276893_244434932260649_848703319_n.jpg",
-    email: "nardoz@hotmail.com",
-    url: "/api/users/1",
-    id: 1,
-    created: "2012-09-23T10:45:00Z",
-    nickname: "nardoz"
-  });
+  show: function(req, res, next) {
+    User.find(parseInt(req.params.id, 10)).success(function(user) {
+      res.send(user);
+    });
+  }
 
 };
-
