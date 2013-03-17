@@ -1,34 +1,27 @@
 
-var restify = require('restify');
+var restify     = require('restify'),
+    controllers = require('./controllers'),
+    mock        = require('./controllers/mock'),
+    models      = require('./db.js').models;
 
+// Create Restify Server
 var server = restify.createServer({
   name: 'Ideas',
   version: '0.2.0'
 });
 
-var controllers = require('./controllers');
+// Inject models to each controller
+for(var key in controllers) {
+  controllers[key].models = models;
+}
 
-server.use(restify.acceptParser(server.acceptable));
-server.use(restify.queryParser());
-server.use(restify.bodyParser({ mapParams: false }));
+// Setup Restify server
+require('./conf/restify.js')(restify, server);
 
-server.get('/ping', controllers.ping.ping);
+// Setup routes
+require('./conf/routes.js')(restify, server, controllers, mock);
 
-server.get('/users', controllers.users.list);
-server.get('/users/:id', controllers.users.show);
-
-server.get('/types', controllers.ideasTypes.list);
-server.get('/types/:id', controllers.ideasTypes.show);
-
-var mock = require('./controllers/mock');
-
-server.get('/mock/users', mock.users.list);
-server.get('/mock/users/:id', mock.users.show);
-
-// server.get(/\/docs\/public\/?.*/, restify.serveStatic({
-//   directory: './public'
-// }));
-
+// Start Restify server
 server.listen(1337, function() {
   console.log('%s listening at %s', server.name, server.url);
 });
