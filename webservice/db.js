@@ -1,6 +1,7 @@
-var config        = require('./config.json'),
-    Sequelize     = require('sequelize'),
-    importModels  = require('./utils/import-models.js');
+
+var Sequelize    = require('sequelize'),
+    config       = require('./conf/database.json'),
+    importModels = require('./utils/import-models.js');
 
 var db = new Sequelize(
   config.database,
