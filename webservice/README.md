@@ -27,7 +27,10 @@ like to use a different name.
 Create a mysql user and assign select, update, insert y delete permissions on
 the 'ideas' database.
 
-Edit the webservice/config.json file to set the correct database, username and password
+Create a webservice/conf/database.json file to coonfigure the correct database,
+username and password. You can use webservice/conf/database.json.template file
+to get started. (Note that for security reasons the databse.json file won't be
+commited to git.)
 
 # Start the server
 
@@ -46,7 +49,7 @@ Start the server
 
 and then browse to:
 
-    http://localhost:1337/users
+    http://localhost:1337
 
 Congrats! You have (this VERY PRELIMINAR version of) ideas working!
 
