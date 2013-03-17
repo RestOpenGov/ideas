@@ -11,6 +11,15 @@ var UsersController = {
     });
   },
 
+  count: function(req, res, next) {
+
+    var User = UsersController.models.User;
+
+    User.count().success(function(count) {
+      res.send(count.toString());
+    });
+  },
+
   show: function(req, res, next) {
 
     var User = UsersController.models.User;
