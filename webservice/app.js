@@ -25,9 +25,10 @@ var mock = require('./controllers/mock');
 server.get('/mock/users', mock.users.list);
 server.get('/mock/users/:id', mock.users.show);
 
-// server.get(/\/docs\/public\/?.*/, restify.serveStatic({
-//   directory: './public'
-// }));
+server.get(/\/?.*/, restify.serveStatic({
+  directory : './public',
+  default   : 'index.html'
+}));
 
 server.listen(1337, function() {
   console.log('%s listening at %s', server.name, server.url);
