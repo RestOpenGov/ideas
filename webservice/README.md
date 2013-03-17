@@ -27,7 +27,7 @@ like to use a different name.
 Create a mysql user and assign select, update, insert y delete permissions on
 the 'ideas' database.
 
-Edit the config.json file to set the correct database, username and password
+Edit the webservice/config.json file to set the correct database, username and password
 
 # Start the server
 
