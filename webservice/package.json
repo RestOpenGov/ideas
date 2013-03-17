@@ -1,6 +1,7 @@
 {
   "name": "ideas",
   "description": "Social brainstorming to share and discuss ideas to improve your city",
+  "author": "RestOpenGov team <restopengov@gmail.com>",
   "version": "0.2.0",
   "private": true,
   "dependencies": {
@@ -8,5 +9,6 @@
     "underscore": "1.4.x",
     "sequelize": "1.4.x",
     "require-dir": "x"
-  }
+  },
+  "engine": "node >= 0.10.0"
 }
