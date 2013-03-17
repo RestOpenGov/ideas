@@ -1,0 +1,393 @@
+CREATE DATABASE  IF NOT EXISTS `ideas` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `ideas`;
+-- MySQL dump 10.13  Distrib 5.5.29, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: ideas
+-- ------------------------------------------------------
+-- Server version	5.5.29-0ubuntu0.12.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `comment`
+--
+
+DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idea_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `comment` varchar(1000) NOT NULL DEFAULT '',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `comment_ix_idea` (`idea_id`,`created`),
+  KEY `comment_fk_user` (`user_id`),
+  CONSTRAINT `comment_fk_idea` FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`),
+  CONSTRAINT `comment_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comment`
+--
+
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,1,1,'Excelente idea, escuche que en mar del plata y santa fe lo estan por implementar','2012-09-22 18:10:00'),(2,1,3,'Podrian empezar dando wifi en lugares publicos, y ver como funciona','2012-09-22 18:15:00'),(3,1,4,'Pasa que en una plaza te robarian la laptop :-(','2012-09-22 21:15:00'),(4,2,4,'Muy bien dicho, hoy casi me pisa un colectivo que se habia metido en la bicisenda','2012-09-24 18:40:00'),(5,4,1,'Primero tenes que sacar turno, segui este link http://apps.buenosaires.gov.ar/apps/turnos_online/paso1.php','2012-09-24 22:20:00');
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `idea_type`
+--
+
+DROP TABLE IF EXISTS `idea_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `idea_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idea_type_uk_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `idea_type`
+--
+
+LOCK TABLES `idea_type` WRITE;
+/*!40000 ALTER TABLE `idea_type` DISABLE KEYS */;
+INSERT INTO `idea_type` VALUES (1,'idea','Una propuesta para mejorar la ciudad'),(2,'reclamo','Algo que no nos gusta de la ciudad y que tenemos que cambiar'),(3,'pregunta','Una pregunta acerca de la ciudad para que la comunidad responda'),(4,'sugerencia','Algún lugar o evento de la ciudad que no te podés perder');
+/*!40000 ALTER TABLE `idea_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `state` varchar(100) NOT NULL,
+  `content` varchar(10000) NOT NULL DEFAULT '',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `notification_ix_user` (`user_id`),
+  CONSTRAINT `notification_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `idea_geo`
+--
+
+DROP TABLE IF EXISTS `idea_geo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `idea_geo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idea_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `lat` double DEFAULT NULL,
+  `lng` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idea_geo_ix_idea` (`idea_id`,`name`),
+  CONSTRAINT `idea_geo_fk_idea` FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `idea_geo`
+--
+
+LOCK TABLES `idea_geo` WRITE;
+/*!40000 ALTER TABLE `idea_geo` DISABLE KEYS */;
+INSERT INTO `idea_geo` VALUES (1,3,'corrientes y malabia',-34.5929527,-58.4302979),(2,5,'Cine Gaumont - Rivadavia 1635',-34.609117,-58.3896655),(3,5,'Cine Arte Cinema - Salta 1620',-34.6271162,-58.3828335),(4,5,'Cine La Máscara - Piedras 736',-34.6167007,-58.3774124);
+/*!40000 ALTER TABLE `idea_geo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `idea`
+--
+
+DROP TABLE IF EXISTS `idea`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `idea` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idea_type_id` int(11) NOT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `name` varchar(200) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL DEFAULT '',
+  `user_id` int(11) NOT NULL,
+  `views` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idea_uk_name` (`name`),
+  KEY `idea_ix_type` (`idea_type_id`),
+  KEY `idea_ix_subject` (`subject_id`),
+  KEY `idea_ix_user` (`user_id`),
+  KEY `idea_ix_views` (`views`),
+  KEY `idea_ix_created` (`created`),
+  CONSTRAINT `idea_fk_idea_type` FOREIGN KEY (`idea_type_id`) REFERENCES `idea_type` (`id`),
+  CONSTRAINT `idea_fk_subject` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
+  CONSTRAINT `idea_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `idea`
+--
+
+LOCK TABLES `idea` WRITE;
+/*!40000 ALTER TABLE `idea` DISABLE KEYS */;
+INSERT INTO `idea` VALUES (1,1,4,'Wifi libre en ba','Proveer acceso wifi gratuito en toda la ciudad',2,551,'2012-09-22 17:20:00'),(2,1,7,'Multas para los autos que no respetan las bicisendas','Implementar multas...',1,230,'2012-09-23 18:20:00'),(3,2,11,'Cortar las ramas de corrientes y malabia','En corrientes y malabia hay ramas de arbol que impiden el paso',3,72,'2012-09-24 22:20:00'),(4,3,3,'¿Cómo hago para sacar el registro de conducir?','¿Qué tramite debo hacer para sacar el registro?',1,124,'2012-09-24 22:20:00'),(5,4,1,'Ver cine nacional en las salas del espacio INCAA','Cine nacional y latinoamericano a precios verdaderamente accesible. También hay descuentos para jubilados, estudiantes y sindicatos.',1,86,'2012-09-28 17:10:00');
+/*!40000 ALTER TABLE `idea` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tag`
+--
+
+DROP TABLE IF EXISTS `tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL DEFAULT '',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tag_uk_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tag`
+--
+
+LOCK TABLES `tag` WRITE;
+/*!40000 ALTER TABLE `tag` DISABLE KEYS */;
+INSERT INTO `tag` VALUES (1,'tecnología','Informática, tecnología y nuevas tendencias','2012-09-18 13:45:00'),(2,'internet','Sitios web','2012-09-19 18:25:00'),(3,'bicisendas','Senderos de la ciudad para circular en bicicleta','2012-09-20 21:42:00'),(4,'transporte','Medios de transporte y circulación por la ciudad','2012-09-20 17:54:00'),(5,'multas','Infracciones, multas y demás normativas','2012-09-21 06:23:00'),(6,'servicios','Servicios que brinda el gobierno de la ciudad','2012-09-22 19:28:00'),(7,'trámites','Trámites','2012-09-23 18:19:00'),(8,'cultura','Cultura','2012-09-23 19:45:00'),(9,'cine','Cine','2012-09-26 21:32:00');
+/*!40000 ALTER TABLE `tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `idea_tag`
+--
+
+DROP TABLE IF EXISTS `idea_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `idea_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idea_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idea_tag_uk` (`idea_id`,`tag_id`),
+  KEY `idea_tag_ix_idea` (`idea_id`,`tag_id`),
+  KEY `idea_tag_ix_tag` (`tag_id`,`idea_id`),
+  CONSTRAINT `idea_tag_fk_idea` FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`),
+  CONSTRAINT `idea_tag_fk_tag` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `idea_tag`
+--
+
+LOCK TABLES `idea_tag` WRITE;
+/*!40000 ALTER TABLE `idea_tag` DISABLE KEYS */;
+INSERT INTO `idea_tag` VALUES (1,1,1),(2,1,2),(3,2,3),(4,2,4),(5,2,5),(6,3,6),(7,4,4),(8,4,7),(9,5,8),(10,5,9);
+/*!40000 ALTER TABLE `idea_tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(100) NOT NULL DEFAULT '',
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `avatar` varchar(100) NOT NULL DEFAULT '',
+  `application_token` varchar(100) NOT NULL DEFAULT '',
+  `token_expiration` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_uk_nickname` (`nickname`),
+  UNIQUE KEY `user_uk_name` (`name`),
+  UNIQUE KEY `user_uk_email` (`email`),
+  KEY `user_ix_application_token` (`application_token`)
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'nardoz','Mister Nardoz','nardoz@hotmail.com','http://profile.ak.fbcdn.net/hprofile-ak-ash4/276893_244434932260649_848703319_n.jpg','','1970-01-01 03:00:00','2012-09-23 14:45:00'),(2,'opensas','Sebastian Scarano','scarano@hotmail.com','http://a0.twimg.com/profile_images/1557699557/penguin_armed_normal.jpg','opensas','2014-01-01 03:00:00','2012-09-22 13:40:00'),(3,'darkipunch','Mister dark punch','darki@hotmail.com','https://twimg0-a.akamaihd.net/profile_images/1157351292/IMG_2299_normal.JPG','','1970-01-01 03:00:00','2012-09-24 21:50:00'),(4,'pala','Mister paladin','pala@hotmail.com','https://twimg0-a.akamaihd.net/profile_images/1644119490/pala-rafting_normal.png','','1970-01-01 03:00:00','2012-09-26 00:30:00'),(5,'Nicolas','Nicolas Melendez','nfmelendez@gmail.com','http://profile.ak.fbcdn.net/hprofile-ak-ash4/276893_244434932260649_848703319_n.jpg','','1970-01-01 03:00:00','2012-10-20 14:45:00'),(6,'alangreid','Alan Reid','','https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc7/371918_576034444_1270541639_q.jpg','88960f92-e7d4-422d-8f96-e6e6bf43f993','2012-12-14 07:07:18','2012-11-14 03:40:52');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vote`
+--
+
+DROP TABLE IF EXISTS `vote`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vote` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vote_type` varchar(10) NOT NULL,
+  `idea_id` int(11) DEFAULT NULL,
+  `comment_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `pos` tinyint(1) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `vote_ix_idea` (`idea_id`,`pos`),
+  KEY `vote_ix_comment` (`comment_id`,`pos`),
+  KEY `vote_ix_user` (`user_id`),
+  CONSTRAINT `vote_fk_comment` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`),
+  CONSTRAINT `vote_fk_idea` FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`),
+  CONSTRAINT `vote_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=292 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vote`
+--
+
+LOCK TABLES `vote` WRITE;
+/*!40000 ALTER TABLE `vote` DISABLE KEYS */;
+INSERT INTO `vote` VALUES (1,'idea',1,NULL,1,1,'2012-09-20 22:20:00'),(2,'idea',1,NULL,3,1,'2012-09-21 14:14:00'),(3,'idea',1,NULL,4,0,'2012-09-22 19:45:00'),(4,'idea',2,NULL,2,1,'2012-09-22 21:34:00'),(5,'idea',2,NULL,3,1,'2012-09-22 21:34:00'),(6,'idea',3,NULL,1,1,'2012-09-23 11:56:00'),(7,'idea',4,NULL,1,1,'2012-09-23 11:56:00'),(8,'idea',4,NULL,2,0,'2012-09-23 11:56:00'),(9,'idea',4,NULL,3,0,'2012-09-23 11:56:00'),(10,'comment',NULL,1,1,1,'2012-09-20 10:03:00'),(11,'comment',NULL,1,2,1,'2012-09-20 14:34:00'),(12,'comment',NULL,1,3,0,'2012-09-20 14:34:00'),(13,'comment',NULL,2,4,1,'2012-09-22 16:43:00'),(14,'comment',NULL,2,3,0,'2012-09-23 15:56:00'),(15,'comment',NULL,2,1,0,'2012-09-24 16:02:00'),(29,'idea',1,NULL,6,1,'2012-11-16 13:03:10'),(30,'idea',2,NULL,6,1,'2012-11-16 13:03:20'),(34,'idea',3,NULL,6,1,'2012-11-16 22:54:43');
+/*!40000 ALTER TABLE `vote` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subject`
+--
+
+DROP TABLE IF EXISTS `subject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subject` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `subject_uk_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subject`
+--
+
+LOCK TABLES `subject` WRITE;
+/*!40000 ALTER TABLE `subject` DISABLE KEYS */;
+INSERT INTO `subject` VALUES (1,'Arte y cultura','Museos, teatros, cines, festivales'),(2,'Medioambiente','Protección y cuidado del medioambiente y la ecología'),(3,'Gobierno','Actos de gobierno y trámites'),(4,'Tecnología','Gobierno electrónico'),(5,'Política','Leyes, resoluciones, campañas políticas'),(6,'Economía','Subisidios, fomentos, impuestos'),(7,'Transporte','Normas de tránsito, infracciones, bicisendas'),(8,'Infraestrucura','Edificios, licitaciones, autopistas, construcciones'),(9,'Salud','Hostpitales, centros de atención, campañas'),(10,'Educación','Colegios, escuelas, campañas educativas'),(11,'Espacio público','Parques, paseos, edificios públicos, vía urbana');
+/*!40000 ALTER TABLE `subject` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `identity`
+--
+
+DROP TABLE IF EXISTS `identity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `identity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `provider` varchar(20) NOT NULL,
+  `provider_id` varchar(100) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_uk_user_provider` (`user_id`,`provider`),
+  CONSTRAINT `identity_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `identity`
+--
+
+LOCK TABLES `identity` WRITE;
+/*!40000 ALTER TABLE `identity` DISABLE KEYS */;
+INSERT INTO `identity` VALUES (1,1,'twitter','twitter_id_for_user_1','2012-09-24 22:20:00'),(2,1,'facebook','facebook_id_for_user_1','2012-09-24 22:20:00'),(3,2,'twitter','twitter_id_for_user_2','2012-09-24 22:20:00'),(4,3,'facebook','facebook_id_for_user_3','2012-09-24 22:20:00'),(5,6,'facebook','576034444','2012-11-14 03:40:52');
+/*!40000 ALTER TABLE `identity` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subscription`
+--
+
+DROP TABLE IF EXISTS `subscription`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subscription` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idea_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `subscription_uk` (`idea_id`,`user_id`),
+  KEY `subscription_ix_idea` (`idea_id`,`user_id`),
+  KEY `subscription_ix_user` (`user_id`,`idea_id`),
+  CONSTRAINT `subscription_fk_idea` FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`),
+  CONSTRAINT `subscription_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subscription`
+--
+
+LOCK TABLES `subscription` WRITE;
+/*!40000 ALTER TABLE `subscription` DISABLE KEYS */;
+INSERT INTO `subscription` VALUES (2,1,1),(1,1,2),(3,1,3),(4,1,4),(9,1,5),(5,2,1),(6,2,2),(7,3,3),(8,4,1);
+/*!40000 ALTER TABLE `subscription` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-03-17 15:54:53
