@@ -8,7 +8,8 @@
     "restify": "2.3.x",
     "underscore": "1.4.x",
     "sequelize": "1.4.x",
-    "require-dir": "x"
+    "require-dir": "x",
+    "coffee-script": "1.6.x"
   },
   "engine": "node >= 0.10.0"
 }
