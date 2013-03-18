@@ -54,3 +54,10 @@ and then browse to:
 Congrats! You have (this VERY PRELIMINAR version of) ideas working!
 
 Now go ahead and have a look at the code.
+
+# Testing
+
+Install jasmine-node
+
+    npm install jasmine-node -g
+
