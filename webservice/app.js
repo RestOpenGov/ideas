@@ -10,11 +10,6 @@ var server = restify.createServer({
   version: '0.2.0'
 });
 
-// Inject models to each controller
-for(var key in controllers) {
-  controllers[key].models = models;
-}
-
 // Setup Restify server
 require('./conf/restify.js')(restify, server);
 

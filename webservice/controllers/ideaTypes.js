@@ -1,9 +1,9 @@
 
-var IdeaTypesController = {
+var IdeaType = require('../db.js').models.IdeaType;
+
+module.exports = {
 
   list: function(req, res, next) {
-
-    var IdeaType = IdeaTypesController.models.IdeaType;
 
     IdeaType.findAll().success(function(ideaTypes) {
       res.send(ideaTypes);
@@ -13,16 +13,13 @@ var IdeaTypesController = {
 
   count: function(req, res, next) {
 
-    var IdeaType = IdeaTypesController.models.IdeaType;
-
     IdeaType.count().success(function(count) {
       res.send(count.toString());
     });
+
   },
 
   show: function(req, res, next) {
-
-    var IdeaType = IdeaTypesController.models.IdeaType;
 
     IdeaType.find(parseInt(req.params.id, 10)).success(function(ideaType) {
       res.send(ideaType);
@@ -31,5 +28,3 @@ var IdeaTypesController = {
   }
 
 };
-
-module.exports = IdeaTypesController;
