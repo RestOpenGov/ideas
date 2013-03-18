@@ -12,12 +12,15 @@ var request = require('http'),
 describe('webservice', function() {
 
   it('should respond to /ping', function(done) {
-    console.log('x');
+    // expect('failed').toBe('will fail');
     request.get(url + 'ping', function(res) {
-      // console.log(res.statusCode);
-      console.log(res);
       expect(res.statusCode).toBe(200);
-      done();
+      res.on('data', function(body) {
+        var json = JSON.parse(body);
+        expect(json.message).toBe("Hi, I'm alive");
+        expect(json.date).toBeDefined();
+        done();
+      });
     });
 
   });
